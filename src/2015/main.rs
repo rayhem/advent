@@ -1,11 +1,10 @@
-use advent_utils::solution::*;
-use lazy_static::__Deref;
+use utils::solution::*;
 use std::collections::HashMap;
 
 mod solutions;
 
 fn main() {
-    let cli = advent_utils::cli::make_cli();
+    let cli = utils::cli::make_cli();
 
     let mut solutions: HashMap<i32, Box<dyn Solution>> = HashMap::new();
     solutions.insert(1, Box::new(solutions::day01::Day01 {}));
@@ -21,12 +20,12 @@ fn main() {
     solutions.insert(16, Box::new(solutions::day16::Day16 {}));
 
     let root_dir = cli.value_of("inputs").unwrap();
-    for day in advent_utils::cli::get_cli_days(&cli).into_iter() {
+    for day in utils::cli::get_cli_days(&cli).into_iter() {
         if let Some(solution) = solutions.get(&day) {
             execute_with_timing(
                 day,
                 &format!("{}/day{:02}.txt", root_dir, day),
-                solution.deref(),
+                solution,
             );
         }
     }

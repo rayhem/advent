@@ -3,7 +3,7 @@ use regex::Regex;
 use std::cmp::{max, min};
 use std::str::FromStr;
 
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 
 pub struct Day06 {}
 

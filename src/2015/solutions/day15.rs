@@ -1,6 +1,6 @@
 use std::{cmp::max, str::FromStr};
 
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 
 pub struct Day15 {}
 

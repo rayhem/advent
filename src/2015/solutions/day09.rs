@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use std::collections::{HashMap, HashSet};
 
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 
 pub struct Day09 {}
 
