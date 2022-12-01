@@ -1,11 +1,12 @@
 [package]
-name = "advent_utils"
+name = "advent"
 version = "0.1.0"
+authors = ["Connor Glosser <glosser1@gmail.com>"]
 edition = "2021"
 
 [lib]
-name = "advent_utils"
-path = "src/lib.rs"
+name = "utils"
+path = "src/utils/lib.rs"
 
 [dependencies]
 clap = "2.33"
