@@ -20,7 +20,13 @@ path = "src/2020/main.rs"
 name = "2019"
 path = "src/2019/main.rs"
 
+[[bin]]
+name = "2015"
+path = "src/2015/main.rs"
+
 [dependencies]
 clap = "2.33"
 itertools = "0.10"
-regex = "1.4.2"
+lazy_static = "1.4"
+md5 = "0.7"
+regex = "1.5"
