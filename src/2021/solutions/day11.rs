@@ -1,4 +1,4 @@
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 use itertools::Itertools;
 use std::str::FromStr;
 

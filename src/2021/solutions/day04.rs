@@ -1,4 +1,4 @@
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 use std::{fmt::Display, str::FromStr};
 
 pub struct Day04 {}

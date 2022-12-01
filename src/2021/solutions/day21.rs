@@ -1,8 +1,8 @@
-use advent_utils::solution::Solution;
+use utils::solution::Solution;
 
-pub struct Day22 {}
+pub struct Day21 {}
 
-impl Solution for Day22 {
+impl Solution for Day21 {
     fn part_one(&self, _input: &str) -> Option<String> {
         todo!()
     }

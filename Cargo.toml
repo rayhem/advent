@@ -8,6 +8,10 @@ edition = "2021"
 name = "utils"
 path = "src/utils/lib.rs"
 
+[[bin]]
+name = "2021"
+path = "src/2021/main.rs"
+
 [dependencies]
 clap = "2.33"
 itertools = "0.10"
