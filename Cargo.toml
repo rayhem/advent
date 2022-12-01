@@ -10,3 +10,4 @@ path = "src/utils/lib.rs"
 
 [dependencies]
 clap = "2.33"
+itertools = "0.10"
