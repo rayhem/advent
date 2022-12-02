@@ -1,123 +1,77 @@
+use std::str::FromStr;
 use utils::puzzle::PuzzleImpl;
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum Throw {
-    Rock = 0,
-    Paper = 1,
-    Scissors = 2,
+pub struct GameRound {
+    // The prescription for what the opponent will play in one round of the
+    // Elves' game of Rock, Paper, Scissors. This is given by the first
+    // character (of two) and always denotes the actual throw the player should
+    // make.
+    opponent_play: i32,
+
+    // The prescription for what _you_ should play in one round of the Elves'
+    // game of Rock, Paper, Scissors. This is given by the second character (of
+    // two) and has a different meaning depending on the part of the puzzle. In
+    // part one, this behaves the same as the opponent's play: it maps directly
+    // to the throw to make. In part two, it indicates the outcome of the game
+    // instead.
+    self_play: i32,
 }
 
-impl TryFrom<char> for Throw {
-    type Error = utils::error::Error;
+impl GameRound {
+    fn part1_score(&self) -> i32 {
+        let player = self.self_play;
+        let outcome = (player - self.opponent_play + 1).wrapping_rem_euclid(3);
+        (player + 1) + 3 * outcome
+    }
 
-    fn try_from(value: char) -> Result<Self, Self::Error> {
-        match value {
-            'A' | 'X' => Ok(Self::Rock),
-            'B' | 'Y' => Ok(Self::Paper),
-            'C' | 'Z' => Ok(Self::Scissors),
-            _ => Err(utils::error::Error::ParseError),
-        }
+    fn part2_score(&self) -> i32 {
+        let outcome = self.self_play;
+        let player = (outcome + self.opponent_play - 1).wrapping_rem_euclid(3);
+        (player + 1) + 3 * outcome
     }
 }
 
-impl Throw {
-    fn loses_against(self) -> Self {
-        match self {
-            Self::Rock => Self::Paper,
-            Self::Paper => Self::Scissors,
-            Self::Scissors => Self::Rock,
-        }
+impl std::str::FromStr for GameRound {
+    type Err = utils::error::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let mut chars = s.chars();
+        let c1 = chars.next().ok_or(Self::Err::ParseError)?;
+        let opponent_play = (c1 as i32) - ('A' as i32);
+
+        let c2 = chars.nth(1).ok_or(Self::Err::ParseError)?;
+        let self_play = (c2 as i32) - ('X' as i32);
+
+        Ok(Self {
+            opponent_play,
+            self_play,
+        })
     }
-
-    fn draws_against(self) -> Self {
-        self
-    }
-
-    fn wins_against(self) -> Self {
-        match self {
-            Self::Rock => Self::Scissors,
-            Self::Paper => Self::Rock,
-            Self::Scissors => Self::Paper,
-        }
-    }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum GameResult {
-    Lose,
-    Draw,
-    Win,
-}
-
-impl TryFrom<char> for GameResult {
-    type Error = utils::error::Error;
-
-    fn try_from(value: char) -> Result<Self, Self::Error> {
-        match value {
-            'X' => Ok(Self::Lose),
-            'Y' => Ok(Self::Draw),
-            'Z' => Ok(Self::Win),
-            _ => Err(utils::error::Error::ParseError),
-        }
-    }
-}
-
-fn game_score(p1: Throw, p2: Throw) -> i32 {
-    (p2 as i32 + 1)
-        + if p1 == p2 {
-            3
-        } else if p1.loses_against() == p2 {
-            6
-        } else {
-            0
-        }
-}
-
-fn game_score2(p1: Throw, result: GameResult) -> i32 {
-    match result {
-        GameResult::Lose => game_score(p1, p1.wins_against()),
-        GameResult::Draw => game_score(p1, p1.draws_against()),
-        GameResult::Win => game_score(p1, p1.loses_against()),
-    }
-}
-
-fn tally_by(parsed_input: &Vec<[char; 2]>, tally: fn([char; 2]) -> i32) -> i32 {
-    parsed_input.iter().map(|chars| tally(*chars)).sum::<i32>()
 }
 
 pub struct Day02 {}
 
 impl PuzzleImpl for Day02 {
-    type ParsedInput = Vec<[char; 2]>;
+    type ParsedInput = Vec<GameRound>;
 
     fn parse_input(input: &str) -> Result<Self::ParsedInput, utils::error::Error> {
-        Ok(input
-            .lines()
-            .map(|c| {
-                let mut chars = c.chars();
-                [
-                    chars.next().ok_or(utils::error::Error::ParseError).unwrap(),
-                    chars.nth(1).ok_or(utils::error::Error::ParseError).unwrap(),
-                ]
-            })
-            .collect())
+        Ok(input.lines().flat_map(FromStr::from_str).collect())
     }
 
     fn part_one(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
-        Ok(tally_by(input, |[c1, c2]| {
-            game_score(Throw::try_from(c1).unwrap(), Throw::try_from(c2).unwrap())
-        })
-        .to_string())
+        Ok(input
+            .iter()
+            .map(GameRound::part1_score)
+            .sum::<i32>()
+            .to_string())
     }
 
     fn part_two(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
-        Ok(tally_by(input, |[c1, c2]| {
-            game_score2(
-                Throw::try_from(c1).unwrap(),
-                GameResult::try_from(c2).unwrap(),
-            )
-        })
-        .to_string())
+        Ok(input
+            .iter()
+            .map(GameRound::part2_score)
+            .sum::<i32>()
+            .to_string())
     }
 }
 
