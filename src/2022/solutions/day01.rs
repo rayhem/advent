@@ -1,36 +1,38 @@
 use itertools::Itertools;
-use utils::solution::Solution;
+use utils::{error::Error, puzzle::PuzzleImpl};
 
 pub struct Day01 {}
 
-impl Solution for Day01 {
-    fn part_one(&self, input: &str) -> Option<String> {
-        let elf_calories = parse_calories(input);
+impl PuzzleImpl for Day01 {
+    type ParsedInput = Vec<i32>;
 
-        elf_calories.iter().max().map(i32::to_string)
+    fn parse_input(input: &str) -> Result<Self::ParsedInput, Error> {
+        Ok(input
+            .lines()
+            .map(|s| s.parse::<i32>())
+            .group_by(|x| x.is_ok())
+            .into_iter()
+            .map(|(_, xs)| xs.flatten().sum::<i32>())
+            .collect())
     }
 
-    fn part_two(&self, input: &str) -> Option<String> {
-        Some(
-            parse_calories(input)
-                .iter()
-                .sorted()
-                .rev()
-                .take(3)
-                .sum::<i32>()
-                .to_string(),
-        )
+    fn part_one(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
+        parsed_input
+            .iter()
+            .max()
+            .map(i32::to_string)
+            .ok_or(Error::ParseError)
     }
-}
 
-fn parse_calories(input: &str) -> Vec<i32> {
-    input
-        .lines()
-        .map(|s| s.parse::<i32>())
-        .group_by(|x| x.is_ok())
-        .into_iter()
-        .map(|(_, xs)| xs.flatten().sum())
-        .collect()
+    fn part_two(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
+        Ok(parsed_input
+            .iter()
+            .sorted()
+            .rev()
+            .take(3)
+            .sum::<i32>()
+            .to_string())
+    }
 }
 
 #[cfg(test)]

@@ -1,2 +1,3 @@
 pub mod cli;
-pub mod solution;
+pub mod error;
+pub mod puzzle;
