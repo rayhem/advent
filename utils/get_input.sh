@@ -3,7 +3,7 @@
 
 currentYear=$(date +%Y)
 year=$1
-if [[ "$year" -le "2015" ]] || [[ "$year" -gt "$currentYear" ]]; then
+if [[ "$year" -lt "2015" ]] || [[ "$year" -gt "$currentYear" ]]; then
     echo "Invalid year ($year). Years must be between 2015 and $currentYear" >&2
     exit 1
 fi
@@ -16,4 +16,4 @@ fi
 
 urlPath="https://adventofcode.com/$year/day/$day/input"
 echo "Downloading from $urlPath" >&2
-curl --cookie "session=$ADVENT_TOKEN" "$urlPath"
+curl --cookie "session=$ADVENT_TOKEN" -A "github.com/rayhem/advent by $(git config user.email)" "$urlPath"
