@@ -23,7 +23,22 @@ impl PuzzleImpl for Day03 {
     }
 
     fn part_two(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
-        Err(utils::error::Error::Unimplemented)
+        let v = input.lines().collect_vec();
+        Ok(v.chunks(3)
+            .map(|chunk| {
+                let mut i = chunk.iter();
+                let a = i.next().unwrap();
+                let b = i.next().unwrap();
+                let c = i.next().unwrap();
+                priority(
+                    a.chars()
+                        .filter(|ch| b.contains(*ch) && c.contains(*ch))
+                        .next()
+                        .unwrap(),
+                )
+            })
+            .sum::<i32>()
+            .to_string())
     }
 }
 
