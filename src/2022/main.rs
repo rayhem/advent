@@ -9,6 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut puzzles: HashMap<i32, Box<dyn Puzzle>> = HashMap::new();
     puzzles.insert(1, Box::new(solutions::day01::Day01 {}));
     puzzles.insert(2, Box::new(solutions::day02::Day02 {}));
+    puzzles.insert(3, Box::new(solutions::day03::Day03 {}));
 
     let root_dir = cli.value_of("inputs").unwrap();
     for day in utils::cli::get_cli_days(&cli).into_iter() {
