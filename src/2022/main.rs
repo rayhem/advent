@@ -1,3 +1,4 @@
+use core::time;
 use std::collections::HashMap;
 use utils::puzzle::*;
 
@@ -14,8 +15,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let root_dir = cli.value_of("inputs").unwrap();
     for day in utils::cli::get_cli_days(&cli).into_iter() {
         if let Some(puzzle) = puzzles.get(&day) {
-            let filename = format!("{}/day{:02}.txt", root_dir, day);
-            execute_with_timing(day, &filename, puzzle)?;
+            let filename = std::path::Path::from(format!("{}/day{:02}.txt", root_dir, day));
+            let timed_results = execute_with_timing(&filename, puzzle)?;
+
+            println!("Day {:2>}: {}", day, timed_results);
         }
     }
 

@@ -1,3 +1,8 @@
-/target
 **/*.rs.bk
-input/
+/target
+
+# Ignore text files by default as they may be things like input files (which
+# shouldn't be comitted per the Advent of Code terms) or log files (which
+# shouldn't be committed anyway). They can always be manually added with a -f
+# flag.
+*.txt

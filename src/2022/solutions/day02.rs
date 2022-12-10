@@ -18,13 +18,13 @@ pub struct GameRound {
 }
 
 impl GameRound {
-    fn part1_score(&self) -> i32 {
+    fn part_a_score(&self) -> i32 {
         let player = self.self_play;
         let outcome = (player - self.opponent_play + 1).wrapping_rem_euclid(3);
         (player + 1) + 3 * outcome
     }
 
-    fn part2_score(&self) -> i32 {
+    fn part_b_score(&self) -> i32 {
         let outcome = self.self_play;
         let player = (outcome + self.opponent_play - 1).wrapping_rem_euclid(3);
         (player + 1) + 3 * outcome
@@ -58,18 +58,18 @@ impl PuzzleImpl for Day02 {
         Ok(input.lines().flat_map(FromStr::from_str).collect())
     }
 
-    fn part_one(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_a(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         Ok(input
             .iter()
-            .map(GameRound::part1_score)
+            .map(GameRound::part_a_score)
             .sum::<i32>()
             .to_string())
     }
 
-    fn part_two(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_b(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         Ok(input
             .iter()
-            .map(GameRound::part2_score)
+            .map(GameRound::part_b_score)
             .sum::<i32>()
             .to_string())
     }
