@@ -5,6 +5,12 @@ authors = ["Connor Glosser <glosser1@gmail.com>"]
 edition = "2021"
 default-run = "2022"
 
+[features]
+# The `verify` feature is used to verify the solution to each puzzle matches the
+# value submitted to Advent of Code. This feature produces an additional set of
+# #[test] functions that compare each puzzle's solution with a string literal.
+verify = []
+
 [lib]
 name = "utils"
 path = "src/utils/lib.rs"

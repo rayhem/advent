@@ -10,7 +10,7 @@ pub trait Puzzle {
 impl<T: PuzzleImpl> Puzzle for T {
     fn solution(&self, input: &str) -> PuzzleResult {
         let parsed_input = Self::parse_input(input).expect("Could not parse input");
-        [Self::part_one(&parsed_input), Self::part_two(&parsed_input)]
+        [Self::part_a(&parsed_input), Self::part_b(&parsed_input)]
     }
 }
 
@@ -19,8 +19,8 @@ pub trait PuzzleImpl {
 
     fn parse_input(input: &str) -> Result<Self::ParsedInput, Error>;
 
-    fn part_one(parsed_input: &Self::ParsedInput) -> Result<String, Error>;
-    fn part_two(parsed_input: &Self::ParsedInput) -> Result<String, Error>;
+    fn part_a(parsed_input: &Self::ParsedInput) -> Result<String, Error>;
+    fn part_b(parsed_input: &Self::ParsedInput) -> Result<String, Error>;
 }
 
 pub fn execute_with_timing<P>(

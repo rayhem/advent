@@ -16,7 +16,7 @@ impl PuzzleImpl for Day01 {
             .collect())
     }
 
-    fn part_one(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
+    fn part_a(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
         parsed_input
             .iter()
             .max()
@@ -24,7 +24,7 @@ impl PuzzleImpl for Day01 {
             .ok_or(Error::ParseError)
     }
 
-    fn part_two(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
+    fn part_b(parsed_input: &Self::ParsedInput) -> Result<String, Error> {
         Ok(parsed_input
             .iter()
             .sorted()
@@ -38,6 +38,7 @@ impl PuzzleImpl for Day01 {
 #[cfg(test)]
 mod test {
     mod unit {}
-
-    mod integration {}
 }
+
+#[cfg(feature = "verify")]
+utils::verify_submitted_answers!(Day01, 2022, 01, "67658", "200158");

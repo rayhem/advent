@@ -1,5 +1,6 @@
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Debug)]
 pub enum Error {
-    Unimplemented,
+    InvalidFile(std::path::PathBuf),
     ParseError,
+    Unimplemented,
 }

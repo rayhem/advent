@@ -58,7 +58,7 @@ impl PuzzleImpl for Day02 {
         Ok(input.lines().flat_map(FromStr::from_str).collect())
     }
 
-    fn part_one(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_a(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         Ok(input
             .iter()
             .map(GameRound::part1_score)
@@ -66,7 +66,7 @@ impl PuzzleImpl for Day02 {
             .to_string())
     }
 
-    fn part_two(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_b(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         Ok(input
             .iter()
             .map(GameRound::part2_score)
@@ -78,6 +78,7 @@ impl PuzzleImpl for Day02 {
 #[cfg(test)]
 mod test {
     mod unit {}
-
-    mod integration {}
 }
+
+#[cfg(feature = "verify")]
+utils::verify_submitted_answers!(Day02, 2022, 02, "9177", "12111");

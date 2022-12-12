@@ -10,7 +10,7 @@ impl PuzzleImpl for Day03 {
         Ok(input.to_owned())
     }
 
-    fn part_one(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_a(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         let total = input
             .lines()
             .map(|l| {
@@ -22,7 +22,7 @@ impl PuzzleImpl for Day03 {
         Ok(total.to_string())
     }
 
-    fn part_two(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
+    fn part_b(input: &Self::ParsedInput) -> Result<String, utils::error::Error> {
         let v = input.lines().collect_vec();
         Ok(v.chunks(3)
             .map(|chunk| {
@@ -61,6 +61,7 @@ fn priority(c: char) -> i32 {
 #[cfg(test)]
 mod test {
     mod unit {}
-
-    mod integration {}
 }
+
+#[cfg(feature = "verify")]
+utils::verify_submitted_answers!(Day03, 2022, 03, "8139", "2668");
